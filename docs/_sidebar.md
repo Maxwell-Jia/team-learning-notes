@@ -1,4 +1,3 @@
-- 目录
-    - [第53期 大模型理论基础](Q53_llm_theory/contents.md)
-        - [task01：引言篇](Q53_llm_theory/task01.md)
-        - [task02: 大模型的能力篇](Q53_llm_theory/task02.md)
+- [第53期 大模型理论基础](Q53_llm_theory/contents.md)
+    - [task01：引言篇](Q53_llm_theory/task01.md)
+    - [task02: 大模型的能力篇](Q53_llm_theory/task02.md)
