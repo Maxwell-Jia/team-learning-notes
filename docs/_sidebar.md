@@ -1,4 +1,8 @@
 - [目录](README.md)
+
+    - 第54期 Leetcode 面试篇上
+        - [task01: 第001~012题](202401_leetcode_interview_1/task01.md)
+
     - 第53期 大模型理论基础
         - [task01: 引言](Q53_llm_theory/task01.md)
         - [task02: 大模型的能力](Q53_llm_theory/task02.md)
