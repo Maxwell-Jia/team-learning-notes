@@ -1,6 +1,9 @@
 - [目录](README.md)
     - 第53期 大模型理论基础
-        - [task01: 引言篇](Q53_llm_theory/task01.md)
-        - [task02: 大模型的能力篇](Q53_llm_theory/task02.md)
+        - [task01: 引言](Q53_llm_theory/task01.md)
+        - [task02: 大模型的能力](Q53_llm_theory/task02.md)
         - [task03: 大模型的有害性-上下](Q53_llm_theory/task03.md)
         - [task04: 大模型的数据](Q53_llm_theory/task04.md)
+        - [task05: 大模型法律](Q53_llm_theory/task05.md)
+        - [task06: 模型架构](Q53_llm_theory/task06.md)
+        - [task07: 模型训练](Q53_llm_theory/task07.md)
