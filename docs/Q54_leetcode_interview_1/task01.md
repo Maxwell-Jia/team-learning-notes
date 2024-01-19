@@ -1,5 +1,7 @@
 # Task01: 第 001~012 题
 
+[项目地址](https://datawhalechina.github.io/leetcode-notes/#/ch06/index)
+
 ## 1. [Leetcode 54 螺旋矩阵](https://leetcode.cn/problems/spiral-matrix/)
 
 **思路**
@@ -236,4 +238,196 @@ class Solution:
         for num in nums:
             cnt[num] = cnt.get(num, 0) + 1
         return max(cnt, key=lambda k: cnt[k])
+```
+
+
+## 7. [Leetcode 136 只出现一次的数字](https://leetcode.cn/problems/single-number/description/)
+
+**思路**
+
+与多数元素一样，可以使用哈希表来存储每个元素出现的次数，遍历哈希表返回次数为1的键。但是这种空间复杂度为 O(N) 的方法不满足题目要求，需要使用空间复杂度为 O(1) 的方法。
+
+可以使用位运算。本题可以使用异或运算，疑惑运算有以下三个性质：
+
+1. 任何数和 0 做异或运算，结果仍然是原来的数，即 a ^ 0 = a
+2. 任何数和其自身做异或运算，结果是 0，即 a ^ a = 0
+3. 异或运算满足交换律和结合律，即 a ^ b ^ c = a ^ (b ^ c) = (a ^ b) ^ c
+
+用于求解只出现一次的数字，可以先对整个数组进行异或运算，得到的结果就是那个只出现一次的数字。
+
+**代码-哈希表**
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        cnt = {}
+        for num in nums:
+            cnt[num] = cnt.get(num, 0) + 1
+        for k, v in cnt.items():
+            if v == 1:
+                return k
+```
+
+**代码-异或**
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        flag = 0
+        for num in nums:
+            flag ^= num
+        return flag
+```
+
+## 8. [Leetcode 56 合并区间](https://leetcode.cn/problems/merge-intervals/description/)
+
+**思路**
+
+首先对数组进行排序，然后遍历排序后的数组，如果当前区间的起始位置大于前一个区间的结束位置，则说明两个区间不相交，将前一个区间加入结果数组，然后将当前区间加入结果数组。如果当前区间的起始位置小于等于前一个区间的结束位置，则说明两个区间相交，将前一个区间的结束位置更新为当前区间的结束位置，继续遍历下一个区间。最后，将最后一个区间加入结果数组。
+
+**代码**
+
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort(key=lambda x: x[0])
+        res = []
+        for interval in intervals:
+            if not res or res[-1][1] < interval[0]:
+                res.append(interval)
+            else:
+                res[-1][1] = max(interval[1], res[-1][1])
+        return res
+```
+
+
+## 9. [Leetcode 179 最大数](https://leetcode.cn/problems/largest-number/description/)
+
+**思路**
+
+将输入的整数数组转换为字符串数组，然后对字符串数组进行排序。排序的规则是，如果两个字符串 s 和 t 拼接后得到 s+t 和 t+s，那么 s 应该排在 t 的前面。最后，将排序后的字符串数组拼接成一个字符串，并返回。
+
+注意处理全 0 的情况。
+
+```python
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        def compare(x: str, y: str):
+            return int(y + x) - int(x + y) 
+        
+        nums = [str(num) for  num in nums]
+        nums.sort(key=functools.cmp_to_key(compare))
+        res = ''.join(nums)
+        return '0' if res[0] == '0' else res
+```
+
+
+## 10. [Leetcode 704 二分查找](https://leetcode.cn/problems/binary-search/description/)
+
+**思路**
+
+经典的二分查找。注意右区间的开闭问题。
+
+**代码**
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+
+
+## 11. [Leetcode 34 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
+
+**思路**
+
+进行普通二分查找，找到目标值后，分别向左和向右查找第一个和最后一个位置。
+
+**代码**
+
+```cpp
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        vector<int> ans;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) {
+                // 向左查找
+                int idx = mid;
+                while (idx >= 0) {
+                    if (nums[idx] != target) {
+                        ans.push_back(idx + 1);
+                        break;
+                    }
+                    idx--;
+                }
+                if (idx == -1) ans.push_back(0);
+                // 向右查找
+                idx = mid;
+                while (idx < nums.size()) {
+                    if (nums[idx] != target) {
+                        ans.push_back(idx - 1);
+                        break;
+                    }
+                    idx++;
+                }
+                if (idx == nums.size()) ans.push_back(nums.size() - 1);
+                return ans;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+        }
+        return vector<int>{-1, -1};
+    }
+};
+```
+
+
+## 12. [Leetcode 153 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/description/)
+
+**思路**
+
+二分查找，由于旋转数组的顺序性，有以下三种情况：
+1. right > mid > left，最小值在左；
+2. left > right > mid，最小值在左；
+3. mid > left > right，最小值在右；
+前两种统一成一个，这样的话 mid 可以直接和 right 比，小于 right 收缩右边界，大于 right 收缩左边界。
+注意如果和 left 比的话是没办法比出来的。
+
+**代码**
+
+```cpp
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int left = 0;
+        int right = nums.size() - 1;                
+        while (left < right) {                      
+            int mid = left + ((right - left) >> 1);   
+            if (nums[mid] > nums[right]) {          
+                left = mid + 1;                     
+            } else if (nums[mid] < nums[right]) {   
+                right = mid;                        
+            }
+        }
+        return nums[left];  // left == right
+    }
+};
 ```
