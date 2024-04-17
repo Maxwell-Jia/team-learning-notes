@@ -1,6 +1,7 @@
 - [目录](README.md)
     - 第57期 动手学大模型应用开发
         - [task01: 大模型简介](Q57-llm-universe/task01.md)
+        - [task02: 使用LLM API开发应用](Q57-llm-universe/task02.md)
 
     - 第54期 Leetcode 面试篇上
         - [task01: 第001~012题](Q54-leetcode-interview-1/task01.md)
